@@ -1,5 +1,6 @@
 package com.github.api.controllers;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,5 +36,10 @@ public class BookController {
         @RequestBody Book book
     ) {
         return "Book with id " + id + " was updated: " + book; 
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteBook(@PathVariable int id) {
+        return "Book with id " + id + " was deleted.";
     }
 }
