@@ -2,10 +2,19 @@ package com.github.api.models;
 
 public class Book {
     
+    private int id;
     private String title;
     private String author;
     private int publicationYear;
     private String genre;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -36,5 +45,10 @@ public class Book {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    @Override
+    public String toString() {
+        return "Book { ID: " + id + ", title: " + title + ", author: " + author + ", publication year: " + publicationYear +", genre: " + genre + " }";
     }
 }
