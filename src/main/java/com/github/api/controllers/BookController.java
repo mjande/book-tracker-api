@@ -3,6 +3,7 @@ package com.github.api.controllers;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,5 +27,13 @@ public class BookController {
     @PostMapping
     public String createBook(@RequestBody Book book) {
         return "Book was created: " + book;
+    }
+
+    @PutMapping("/{id}")
+    public String updateBook(
+        @PathVariable int id,    
+        @RequestBody Book book
+    ) {
+        return "Book with id " + id + " was updated: " + book; 
     }
 }
