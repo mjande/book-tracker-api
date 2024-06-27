@@ -26,4 +26,13 @@ public class BookEndpointTests {
             .expectBody(String.class)
             .isEqualTo("All books");
     }
+
+    @Test
+    public void getBookByIdReturnsString() {
+        webTestClient.get()
+            .uri("/books/2")
+            .exchange()
+            .expectBody(String.class)
+            .isEqualTo("Book with ID 2");
+    }
 }
