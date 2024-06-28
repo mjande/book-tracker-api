@@ -27,6 +27,8 @@ public class BookEndpointTests {
         webTestClient.get()
             .uri("/books")
             .exchange()
+            .expectStatus()
+            .isOk()
             .expectBody(String.class)
             .isEqualTo("All books");
     }
@@ -36,6 +38,8 @@ public class BookEndpointTests {
         webTestClient.get()
             .uri("/books/2")
             .exchange()
+            .expectStatus()
+            .isOk()
             .expectBody(String.class)
             .isEqualTo("Book with ID 2");
     }
@@ -55,6 +59,8 @@ public class BookEndpointTests {
             .uri("/books")
             .body(bookMono, Book.class)
             .exchange()
+            .expectStatus()
+            .isCreated()
             .expectBody(String.class)
             .isEqualTo("Book was created: " + newBook.toString());
     }
@@ -74,6 +80,8 @@ public class BookEndpointTests {
             .uri("/books/1")
             .body(bookMono, Book.class)
             .exchange()
+            .expectStatus()
+            .isOk()
             .expectBody(String.class)
             .isEqualTo("Book with id 1 was updated: " + updatedBook.toString());
     }
@@ -83,7 +91,9 @@ public class BookEndpointTests {
         webTestClient.delete()
             .uri("/books/2")
             .exchange()
-            .expectBody(String.class)
-            .isEqualTo("Book with id 2 was deleted.");
+            .expectStatus()
+            .isNoContent()
+            .expectBody()
+            .isEmpty();
     }
 }

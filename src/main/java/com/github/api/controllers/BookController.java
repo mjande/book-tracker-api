@@ -1,5 +1,7 @@
 package com.github.api.controllers;
 
+import org.apache.catalina.connector.Response;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,30 +18,30 @@ import com.github.api.models.Book;
 public class BookController {
 
     @GetMapping
-    public String getAllBooks() {
-        return "All books";
+    public ResponseEntity<String> getAllBooks() {
+        return ResponseEntity.ok("All books");
     }
 
     @GetMapping("/{id}")
-    public String getBookById(@PathVariable int id) {
-        return "Book with ID " + id;
+    public ResponseEntity<String> getBookById(@PathVariable int id) {
+        return ResponseEntity.ok("Book with ID " + id);
     }
 
     @PostMapping
-    public String createBook(@RequestBody Book book) {
-        return "Book was created: " + book;
+    public ResponseEntity<String> createBook(@RequestBody Book book) {
+        return ResponseEntity.status(201).body("Book was created: " + book);
     }
 
     @PutMapping("/{id}")
-    public String updateBook(
+    public ResponseEntity<String> updateBook(
         @PathVariable int id,    
         @RequestBody Book book
     ) {
-        return "Book with id " + id + " was updated: " + book; 
+        return ResponseEntity.ok("Book with id " + id + " was updated: " + book); 
     }
 
     @DeleteMapping("/{id}")
-    public String deleteBook(@PathVariable int id) {
-        return "Book with id " + id + " was deleted.";
+    public ResponseEntity<Void> deleteBook(@PathVariable int id) {
+        return ResponseEntity.noContent().build();
     }
 }
