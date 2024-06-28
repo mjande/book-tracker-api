@@ -8,13 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import com.github.api.models.Book;
+import com.github.api.models.User;
 
 import reactor.core.publisher.Mono;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
-public class BookEndpointTests {
+public class UserEndpointTests {
     
     @LocalServerPort
     private int port;
@@ -23,73 +23,73 @@ public class BookEndpointTests {
     private WebTestClient webTestClient;
 
     @Test
-    public void getAllBooksReturnsString() {
+    public void getAllUsersReturnsString() {
         webTestClient.get()
-            .uri("/books")
+            .uri("/users")
             .exchange()
             .expectStatus()
             .isOk()
             .expectBody(String.class)
-            .isEqualTo("All books");
+            .isEqualTo("All users");
     }
 
     @Test
-    public void getBookByIdReturnsString() {
+    public void getUserByIdReturnsString() {
         webTestClient.get()
-            .uri("/books/2")
+            .uri("/users/1")
             .exchange()
             .expectStatus()
             .isOk()
             .expectBody(String.class)
-            .isEqualTo("Book with ID 2");
+            .isEqualTo("User with ID 1");
     }
 
     @Test
-    public void createBookReturnsString() {
-        Book newBook = new Book();
-        newBook.setId(1);
-        newBook.setTitle("TestBook");
-        newBook.setAuthor("TestAuthor");
-        newBook.setPublicationYear(2024);
-        newBook.setGenre("TestGenre");
+    public void createUserReturnsString() {
+        User newUser = new User();
+        newUser.setId(1);
+        newUser.setName("testName");
+        newUser.setEmail("test@email.com");
+        newUser.setPassword("testPassword");
+        newUser.setType("testType");
 
-        Mono<Book> bookMono = Mono.just(newBook);
+        Mono<User> userMono = Mono.just(newUser);
         
         webTestClient.post()
-            .uri("/books")
-            .body(bookMono, Book.class)
+            .uri("/users")
+            .body(userMono, User.class)
             .exchange()
             .expectStatus()
             .isCreated()
             .expectBody(String.class)
-            .isEqualTo("Book was created: " + newBook);
+            .isEqualTo("User was created: " + newUser);
     }
 
     @Test
-    public void updateBookReturnsString() {
-        Book updatedBook = new Book();
-        updatedBook.setId(1);
-        updatedBook.setTitle("TestBook");
-        updatedBook.setAuthor("TestAuthor");
-        updatedBook.setPublicationYear(2024);
-        updatedBook.setGenre("TestGenre");
+    public void updateUserReturnsString() {
+        User updatedUser = new User();
+        updatedUser.setId(1);
+        updatedUser.setName("testName");
+        updatedUser.setEmail("test@email.com");
+        updatedUser.setPassword("testPassword");
+        updatedUser.setType("testType");
 
-        Mono<Book> bookMono = Mono.just(updatedBook);
+        Mono<User> UserMono = Mono.just(updatedUser);
 
         webTestClient.put()
-            .uri("/books/1")
-            .body(bookMono, Book.class)
+            .uri("/users/1")
+            .body(UserMono, User.class)
             .exchange()
             .expectStatus()
             .isOk()
             .expectBody(String.class)
-            .isEqualTo("Book with id 1 was updated: " + updatedBook);
+            .isEqualTo("User with id 1 was updated: " + updatedUser.toString());
     }
 
     @Test
-    public void deleteBookReturnsString() {
+    public void deleteUserReturnsNoContent() {
         webTestClient.delete()
-            .uri("/books/2")
+            .uri("/users/2")
             .exchange()
             .expectStatus()
             .isNoContent()
